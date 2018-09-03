@@ -28,6 +28,10 @@ RUN a2ensite base.conf
 
 COPY ./php.ini /usr/local/etc/php/
 
+# composer
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+
 # wpcli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
