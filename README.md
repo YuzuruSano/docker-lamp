@@ -1,5 +1,12 @@
 
-Docker lamp emvironment with apache , php7-1 , mysql:57 , wp-cli , composer , ssmtp
+Docker lamp environment. 
+- apache
+- php7-1
+- mysql:57
+- wp-cli
+- composer
+- ssmtp
+
 # Getting Started
 
 ## Requirements
