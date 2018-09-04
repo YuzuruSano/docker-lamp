@@ -16,7 +16,7 @@ Docker lamp environment.
 ## Setup
 
 ```
-git clone git@github.com:YuzuruSano/docker-lamp.git
+git clone https://github.com/YuzuruSano/docker-lamp.git
 ```
 
 ### Edit `./docker-compose.yml`
@@ -57,7 +57,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-and open http://sample.loacalhost:{port}
+and open http://sample.localhost:{port}
 
 ### Stop local server
 ```
