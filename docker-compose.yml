@@ -1,19 +1,29 @@
 version: '2'
 services:
   db:
-    build: ./db
+    image: mariadb:10.3.16
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
-      - ./db/mysql_data:/var/lib/mysql
+      - ./mariadb-data:/var/lib/mysql
     ports:
-      - "{port(example/13306)}:3306"
+      - "23306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: '{password}'
-      TZ: "Asia/Tokyo"
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
   web:
       build: ./web
       ports:
-        - '{yoursetting(example/80)}:80'                    
+        - '80:80'
+        - '443:443'
       volumes:
-        - ./html:/var/www/html         
+        - ./html/:/var/www/html/:cached
+        - ~/.ssh:/root/.ssh
+        - ./cert:/etc/pki/ssl
       depends_on:
         - db
+        - mailhog
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
