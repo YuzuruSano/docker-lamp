@@ -18,7 +18,10 @@ Docker lamp environment.
 ## Setup
 
 ```
+# if you dont' have.
 brew install mkcert
+```
+```
 git clone https://github.com/YuzuruSano/docker-lamp.git
 ```
 
@@ -42,7 +45,6 @@ git clone https://github.com/YuzuruSano/docker-lamp.git
 ### Set ssl certs
 
 ```
-mkcert --install
 mkcert "*.docker docker"
 mv _wildcard.docker-key.pem _wildcard.docker.pem ./cert
 ```
