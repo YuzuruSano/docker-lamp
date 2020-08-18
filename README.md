@@ -1,7 +1,7 @@
 
 Docker lamp environment. 
 - apache2.4
-- php73
+- php74
 - mariaDB
 - wp-cli
 - composer
