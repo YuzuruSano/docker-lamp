@@ -14,13 +14,40 @@ Docker lamp environment.
 
 - [Docker for mac](https://docs.docker.com/docker-for-mac/install/)
 - [mkcert](https://github.com/FiloSottile/mkcert)
+- [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)
 
 ## Setup
 
+### Setup cert, dnsmasq  
+
+)dnsmasq reference:  
+https://nextat.co.jp/staff/archives/248
+
 ```
 # if you dont' have.
+
 brew install mkcert
+
+brew install dnsmasq
+
+# set dnsmasq, first time only
+
+echo 'address=/docker/127.0.0.1' >> /usr/local/etc/dnsmasq.conf
+
+sudo mkdir -v /etc/resolver
+sudo bash -c 'echo "nameserver 127.0.0.1" >> /etc/resolver/docker'
+
+# start dnsmasq
+sudo brew services start dnsmasq
+
+# if you already started dnsmasq
+sudo brew services restart dnsmasq
+
+# clear dns cache
+sudo killall -HUP mDNSResponder
 ```
+### Clone this repository
+
 ```
 git clone https://github.com/YuzuruSano/docker-lamp.git
 ```
@@ -53,6 +80,9 @@ mv _wildcard.docker-key.pem _wildcard.docker.pem ./cert
 ```
 docker-compose build
 docker-compose up -d
+
+# test
+ping sample.docker 
 ```
 
 and open http://sample.docker
