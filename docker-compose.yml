@@ -1,5 +1,37 @@
-version: '2'
+version: "3.9"
 services:
+  apache:
+    build: apache2
+    ports:
+        - '80:80'
+        - '443:443'
+    depends_on:
+      - php-fpm
+    volumes:
+      - ./html/:/var/www/html/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/data/wp/:/var/www/html/ccg-holdings/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/wp-content/:/var/www/html/ccg-holdings/wp-content/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/assets/build/:/var/www/html/ccg-holdings/wp-content/themes/wp_skelton/assets/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/ccg-crep/data/assets/:/var/www/html/ccg-crep/assets/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/ccg-crep/data/:/var/www/html/ccg-crep/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/dxg/data/:/var/www/html/dxg/:cached
+      - /Users/yuzurusano/Web/dev-php74/html/keynote-origin/data/:/var/www/html/keynote-origin/:cached
+      - ~/.ssh:/root/.ssh
+      - ./cert:/etc/ssl/local/certs
+  php-fpm:
+      build: ./php-fpm
+      volumes:
+        - ./html/:/var/www/html/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/data/wp/:/var/www/html/ccg-holdings/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/wp-content/:/var/www/html/ccg-holdings/wp-content/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/ccg-holdings/assets/build/:/var/www/html/ccg-holdings/wp-content/themes/wp_skelton/assets/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/ccg-crep/data/assets/:/var/www/html/ccg-crep/assets/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/ccg-crep/data/:/var/www/html/ccg-crep/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/dxg/data/:/var/www/html/dxg/:cached
+        - /Users/yuzurusano/Web/dev-php74/html/keynote-origin/data/:/var/www/html/keynote-origin/:cached
+      depends_on:
+        - db
+        - mailhog
   db:
     image: mariadb:10.3.16
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
@@ -10,18 +42,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Tokyo
-  web:
-      build: ./web
-      ports:
-        - '80:80'
-        - '443:443'
-      volumes:
-        - ./html/:/var/www/html/:cached
-        - ~/.ssh:/root/.ssh
-        - ./cert:/etc/pki/ssl
-      depends_on:
-        - db
-        - mailhog
+  
   mailhog:
     image: mailhog/mailhog
     ports:
