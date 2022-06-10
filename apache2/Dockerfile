@@ -1,6 +1,6 @@
 FROM httpd:latest
 
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html/src/web
 COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY ./vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 COPY ./ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
