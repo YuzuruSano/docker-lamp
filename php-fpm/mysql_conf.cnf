@@ -1,0 +1,30 @@
+[mysqld]
+skip-name-resolve
+lower_case_table_names=1
+
+character-set-server = utf8mb4
+max_allowed_packet=16M
+max_connections=50
+thread_cache_size=50
+
+innodb_file_per_table=1
+innodb_large_prefix=1
+innodb_flush_log_at_trx_commit=2
+
+# グローバルバッファ
+innodb_buffer_pool_size=2G # まず調整
+innodb_log_buffer_size=500M
+max_heap_table_size=32M
+tmp_table_size=32M
+query_cache_type=ON
+query_cache_size=256M # 調整
+
+# スレッドバッファ
+key_buffer_size=32M
+read_rnd_buffer_size=1M
+sort_buffer_size=2M
+read_buffer_size=512K
+join_buffer_size=512K
+
+# その他
+expire_logs_days=1

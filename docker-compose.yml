@@ -20,9 +20,9 @@ services:
         - mailhog
   db:
     image: mariadb:10.3.16
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
-      - ./mariadb-data:/var/lib/mysql
+      - ./mariadb-data:/var/lib/mysql:cached
+      - ./php-fpm:/etc/mysql/conf.d
     ports:
       - "23306:3306"
     environment:

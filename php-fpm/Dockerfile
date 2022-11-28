@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.1.6-fpm
 
 ARG PUID=300
 ARG PGID=300
@@ -38,8 +38,7 @@ RUN apt-get upgrade && apt-get update && ACCEPT_EULA=Y && apt-get install -y \
         git
 
 # Install PECLs
-RUN pecl install redis \
-    && pecl install geoip-1.1.1 \
+RUN pecl config-set preferred_state beta \
     && pecl install apcu \
     && pecl install memcached \
     && pecl install xdebug \
@@ -49,10 +48,10 @@ RUN pecl install redis \
     && docker-php-ext-install exif \
     && docker-php-ext-enable exif
 
-RUN docker-php-ext-install -j$(nproc) calendar iconv bcmath xml gd mbstring pdo tidy gettext intl pdo pdo_mysql mysqli simplexml sockets tokenizer xml xsl xmlwriter zip opcache exif \
+RUN docker-php-ext-install -j$(nproc) calendar iconv bcmath xml gd mbstring pdo tidy gettext intl pdo pdo_mysql mysqli simplexml sockets xml xsl xmlwriter zip opcache exif \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure zip \
-    && docker-php-ext-enable redis geoip apcu memcached timezonedb
+    && docker-php-ext-enable apcu memcached timezonedb
 
 # Enable PHP error logging to stdout
 RUN printf "log_errors = On \nerror_log = /dev/stderr\n" > /usr/local/etc/php/conf.d/php-logs.ini
