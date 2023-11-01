@@ -1,36 +1,35 @@
-version: "3.9"
+version: '3'
+
 services:
-  apache:
-    build: apache2
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ./html:/var/www/html
     ports:
-        - '80:80'
-        - '443:443'
-    depends_on:
-      - php-fpm
-    volumes:
-      - ./html/:/var/www/html/:cached
-      - ~/.ssh:/root/.ssh
-      - ./cert:/etc/ssl/local/certs
+      - "80:80"
+      - "443:443"
+  
   php-fpm:
-      build: ./php-fpm
-      volumes:
-        - ./html/:/var/www/html/:cached
-      depends_on:
-        - db
-        - mailhog
-  db:
-    image: mariadb:10.3.16
+    build:
+      context: ./php-fpm
     volumes:
-      - ./mariadb-data:/var/lib/mysql:cached
-      - ./php-fpm:/etc/mysql/conf.d
+      - ./html:/var/www/html
+  
+  mariadb:
+    image: mariadb:latest
     ports:
       - "23306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Tokyo
-  
+    volumes:
+      - ./db_data:/var/lib/mysql
+
   mailhog:
-    image: mailhog/mailhog
+    image: mailhog/mailhog:latest
     ports:
-      - "1025:1025"
       - "8025:8025"
+      
+volumes:
+  db_data: {}

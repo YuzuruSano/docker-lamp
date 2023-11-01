@@ -1,7 +1,7 @@
+Docker lamp environment.
 
-Docker lamp environment. 
-- apache2.4
-- php8.1.6
+- nginx
+- php8.2
 - mariaDB
 - wp-cli
 - composer
@@ -21,6 +21,7 @@ Docker lamp environment.
 # if you dont' have.
 brew install mkcert
 ```
+
 ```
 git clone https://github.com/YuzuruSano/docker-lamp.git
 ```
@@ -38,7 +39,7 @@ git clone https://github.com/YuzuruSano/docker-lamp.git
   web:
      ~
       ports:
-        - '{yoursetting(example/8080)}:80'                    
+        - '{yoursetting(example/8080)}:80'
      ~
 ```
 
@@ -48,6 +49,7 @@ git clone https://github.com/YuzuruSano/docker-lamp.git
 mkcert "*.docker docker"
 mv _wildcard.docker-key.pem _wildcard.docker.pem ./cert
 ```
+
 ### Build local server
 
 ```
@@ -58,6 +60,7 @@ docker-compose up -d
 and open http://sample.docker
 
 ### Stop local server
+
 ```
 docker-compose down
 ```
@@ -65,6 +68,7 @@ docker-compose down
 ## Mail
 
 See mailhog.
+
 ```
 http://localhost:8025/
 ```
