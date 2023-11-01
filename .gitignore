@@ -1,2 +1,2 @@
-cert/*
+nginx/cert/*
 mariadb-data/*
